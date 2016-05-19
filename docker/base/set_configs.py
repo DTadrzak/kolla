@@ -21,6 +21,10 @@ import pwd
 import shutil
 import sys
 
+from kazoo import client as kz_client
+from kazoo import exceptions as kz_exceptions
+from six.moves.urllib import parse
+
 
 # TODO(rhallisey): add docstring.
 logging.basicConfig()
@@ -55,8 +59,9 @@ def validate_source(data):
             else:
                 LOG.error("The source to copy does not exist: %s", source)
                 sys.exit(1)
-
     return True
+
+
 
 
 def copy_files(data):

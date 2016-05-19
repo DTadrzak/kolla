@@ -48,9 +48,9 @@ RUN yum -y install \
 
     {% if install_metatype in ['rdo', 'mixed'] %}
 
-{% for cmd in rpm_setup %}
+{% for cmd in rpm_setup %}
 {{ cmd }}
-{% endfor %}
+{% endfor %}
 
     {% endif %}
     {# endif for repo setup for all RHEL except RHEL OSP #}
@@ -148,6 +148,9 @@ COPY versionlock.list /etc/yum/pluginconf.d/
 
 # Install base packages
 RUN yum -y install \
+        python-jinja2 \
+        python-kazoo \
+        python-six \
         sudo \
         which \
         python \
@@ -164,6 +167,9 @@ RUN yum -y install \
 # Update packages
 RUN yum -y install \
         curl \
+        python-jinja2 \
+        python-kazoo \
+        python-six \
         sudo \
         tar \
         which \
