@@ -17,6 +17,12 @@ RUN apt-get -y install --no-install-recommends \
 RUN rm /etc/nova/nova-compute.conf
 
     {% endif %}
+{% elif install_type == 'source' %}
+    {% if base_distro in ['centos', 'fedora', 'oraclelinux', 'rhel'] %}
+RUN yum -y install \
+       genisoimage \
+    && yum clean all
+    {% endif %}
 {% endif %}
 
 {{ include_footer }}
