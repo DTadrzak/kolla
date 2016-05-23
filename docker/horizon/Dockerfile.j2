@@ -86,6 +86,9 @@ RUN ln -s horizon-source/* horizon \
     && (cd /var/lib/kolla/venv/lib/python2.7/site-packages/openstack_dashboard && /var/lib/kolla/venv/bin/python /var/lib/kolla/venv/bin/manage.py compilemessages) \
     && chown -R horizon: /etc/openstack-dashboard /home/horizon /var/lib/kolla/venv/lib/python2.7/site-packages/static
 
+RUN ln -s /var/lib/kolla/venv/lib/python2.7/site-packages/openstack_dashboard /usr/lib/python2.7/site-packages/openstack_dashboard \
+    && ln -s /var/lib/kolla/venv/lib/python2.7/site-packages/static /usr/lib/python2.7/site-packages/static
+
 {% endif %}
 
 COPY extend_start.sh /usr/local/bin/kolla_extend_start
