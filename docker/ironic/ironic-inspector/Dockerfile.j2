@@ -9,7 +9,16 @@ RUN yum -y install \
     && yum clean all
 
     {% endif %}
+{% elif install_type == 'source' %}
+    {% if base_distro in ['centos', 'fedora', 'oraclelinux', 'rhel'] %}
+
+RUN yum -y install \
+    dnsmasq \
+    && yum clean all
+
+    {% endif %}
 {% endif %}
+
 
 {{ include_footer }}
 
