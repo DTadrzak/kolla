@@ -87,7 +87,8 @@ RUN ln -s horizon-source/* horizon \
     && chown -R horizon: /etc/openstack-dashboard /home/horizon /var/lib/kolla/venv/lib/python2.7/site-packages/static
 
 RUN ln -s /var/lib/kolla/venv/lib/python2.7/site-packages/openstack_dashboard /usr/lib/python2.7/site-packages/openstack_dashboard \
-    && ln -s /var/lib/kolla/venv/lib/python2.7/site-packages/static /usr/lib/python2.7/site-packages/static
+    && ln -s /var/lib/kolla/venv/lib/python2.7/site-packages/static /usr/lib/python2.7/site-packages/static \
+    && ln -s /usr/lib/python2.7/site-packages/static/dashboard/scss/serial_console.scss /usr/lib/python2.7/site-packages/static/dashboard/scss/serial_console.css
 
 {% endif %}
 
