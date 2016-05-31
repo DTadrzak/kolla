@@ -22,7 +22,6 @@ if PROJECT_ROOT not in sys.path:
 
 from kolla.image import build
 
-
 def main():
     statuses = build.run_build()
     if statuses:
