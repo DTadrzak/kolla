@@ -1,0 +1,22 @@
+FROM {{ namespace }}/{{ image_prefix }}horizon:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+{% if install_type == 'binary' %}
+# Not supported
+{% elif install_type == 'source' %}
+
+ADD searchlight-ui-archive /searchlight-ui-source
+RUN ln -s searchlight-ui-source/* searchlight-ui \
+    && /var/lib/kolla/venv/bin/pip --no-cache-dir install /searchlight-ui \
+    && cp /searchlight-ui/searchlight_ui/enabled/_1001_project_search_panel.py /var/lib/kolla/venv/lib/python2.7/site-packages/openstack_dashboard/local/enabled/ \
+    && cp /searchlight-ui/searchlight_ui/local_settings.d/_1001_search_settings.py  /var/lib/kolla/venv/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.d/ \
+    && cp /searchlight-ui/searchlight_ui/conf/searchlight_policy.json /etc/openstack-dashboard/ \
+    && ln -s /var/lib/kolla/venv/lib/python2.7/site-packages/searchlight_ui /usr/lib/python2.7/site-packages/searchlight_ui \
+    && /var/lib/kolla/venv/bin/python /var/lib/kolla/venv/bin/manage.py collectstatic --noinput --clear
+
+{% endif %}
+
+COPY extend_start.sh /usr/local/bin/kolla_extend_start
+RUN chmod 755 /usr/local/bin/kolla_extend_start
+
+{{ include_footer }}
