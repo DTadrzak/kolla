@@ -20,10 +20,9 @@ RUN apt-get -y install --no-install-recommends \
     {% endif %}
 {% elif install_type == 'source' %}
     {% if base_distro in ['centos', 'fedora', 'oraclelinux', 'rhel'] %}
-
+RUN wget https://kojipkgs.fedoraproject.org//packages/ipmitool/1.8.15/4.fc23/x86_64/ipmitool-1.8.15-4.fc23.x86_64.rpm && yum -y install ipmitool-1.8.15-4.fc23.x86_64.rpm
 RUN yum -y install \
         qemu-img \
-        ipmitool \
     && yum clean all
 
     {% elif base_distro in ['ubuntu', 'debian'] %}
