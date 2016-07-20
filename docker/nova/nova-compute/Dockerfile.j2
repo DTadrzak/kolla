@@ -56,8 +56,8 @@ RUN apt-get -y install --no-install-recommends \
         ceph-common \
         genisoimage \
         open-iscsi \
-        targetcli \
-        python-rtslib \
+        {% if base_distro == 'debian' and tag != 8 %}tag targetcli \ {% endif %}
+        python-rtslib{% if base_distro == 'debian' && tag == 8 %}-fb{% endif %} \
     && apt-get clean \
     && mkdir -p /etc/ceph
 
