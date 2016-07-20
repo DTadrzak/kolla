@@ -299,6 +299,7 @@ RUN ln -s openstack-base-source/* /requirements \
         python-editor \
         python-glanceclient \
         python-heatclient \
+        python-ironicclient \
         python-keystoneclient \
         python-magnumclient \
         python-manilaclient \
@@ -324,8 +325,7 @@ RUN ln -s openstack-base-source/* /requirements \
         stevedore \
         unicodecsv \
         warlock \
-        wrapt \
-        && /var/lib/kolla/venv/bin/pip --no-cache-dir install --upgrade git+https://intelsdi-gsa-bot:575e7bf13f70272a3f5e81eba06e8adbdd48143d@github.com/intelsdi-x/python-ironicclient-gsa.git@ipmi-console
+        wrapt
 
 ENV PATH /var/lib/kolla/venv/bin:$PATH
 
