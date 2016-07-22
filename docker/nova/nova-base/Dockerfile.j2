@@ -45,10 +45,14 @@ RUN apt-get -y install --no-install-recommends \
     {% endif %}
 
 ADD nova-base-archive /nova-base-source
-RUN ln -s nova-base-source/* nova \
-    && useradd --user-group --create-home --home-dir /var/lib/nova nova \
+
+RUN ln -s nova-base-source/* nova
+ADD 0001-nova-rpcversion.patch /nova/
+RUN cd /nova && patch -p1 < 0001-nova-rpcversion.patch
+RUN useradd --user-group --create-home --home-dir /var/lib/nova nova \
     && chmod 755 /var/lib/nova \
     && /var/lib/kolla/venv/bin/pip --no-cache-dir install --upgrade -c requirements/upper-constraints.txt /nova \
+    && /var/lib/kolla/venv/bin/pip install -U -r nova/requirements.txt \
     && mkdir -p /etc/nova /var/lib/nova \
     && cp -r /nova/etc/nova/* /etc/nova/ \
     && chown -R nova: /etc/nova /var/lib/nova \

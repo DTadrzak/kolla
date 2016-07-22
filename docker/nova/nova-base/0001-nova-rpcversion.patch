@@ -1,0 +1,36 @@
+From 1adee549c60024ae4d5a1639aa529e58a76e5aba Mon Sep 17 00:00:00 2001
+From: Pawel Socha <pawel.socha@gmail.com>
+Date: Fri, 22 Jul 2016 15:36:34 +0200
+Subject: [PATCH] fix: https://review.openstack.org/#/c/339072/
+
+---
+ nova/compute/rpcapi.py | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/nova/compute/rpcapi.py b/nova/compute/rpcapi.py
+index bd451fd..f8f2442 100644
+--- a/nova/compute/rpcapi.py
++++ b/nova/compute/rpcapi.py
+@@ -341,6 +341,20 @@ class ComputeAPI(object):
+             return LAST_VERSION
+         service_version = objects.Service.get_minimum_version(
+             context.get_admin_context(), 'nova-compute')
++
++        #https://review.openstack.org/#/c/339072/
++        # NOTE(johngarbutt) when there are no nova-compute services running we
++        # get service_version == 0. In that case we do not want to cache
++        # this result, because we will get a better answer next time.
++        # As a sane default, return the version from the last release.
++        if service_version == 0:
++            LOG.debug("Not caching compute RPC version_cap, because min "
++                  "service_version is 0. Please ensure a nova-compute "
++                  "service has been started. Defaulting to Mitaka RPC.")
++            return self.VERSION_ALIASES["mitaka"]
++
++        if service_version == 0:
++
+         history = service_obj.SERVICE_VERSION_HISTORY
+         try:
+             version_cap = history[service_version]['compute_rpc']
+-- 
+2.7.3
