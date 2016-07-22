@@ -19,9 +19,9 @@ RUN yum -y install \
 
 {% elif base_distro in ['ubuntu', 'debian'] %}
 
+RUN curl -O https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.2.13/binary/debian/jessie/x86_64/percona-xtrabackup-22_2.2.13-1.jessie_amd64.deb && dpkg -i percona-xtrabackup-22_2.2.13-1.jessie_amd64.deb
 RUN apt-get -y install --no-install-recommends \
         mariadb-galera-server \
-        percona-xtrabackup \
         socat \
         expect \
     && apt-get clean \
