@@ -30,14 +30,13 @@ RUN yum -y install \
 {% set libvirt_group = 'libvirt' %}
 {% endif %}
 
-RUN echo 'APT::Default-Release "stable";' > /etc/apt/apt.conf.d/99defaultrelease
-
 ENV DEBIAN_FRONTEND noninteractive
+RUN echo 'APT::Default-Release "stable";' > /etc/apt/apt.conf.d/99defaultrelease
 RUN echo " deb http://httpredir.debian.org/debian testing  main \n\
 deb http://httpredir.debian.org/debian testing-updates main \n\
 deb http://security.debian.org testing/updates main"  > /etc/apt/sources.list.d/testing.list
 
-RUN apt-get -t testing -y install --no-install-recommends \
+RUN apt-get update && apt-get -t testing -y install --no-install-recommends \
         ceph-common \
         libvirt-bin \
         dmidecode \
@@ -50,6 +49,7 @@ RUN apt-get -t testing -y install --no-install-recommends \
     && mkdir -p /etc/ceph \
     && rm -f /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/autostart/default.xml \
     && usermod -a -G {{ libvirt_group }} nova
+
 
 {% endif %}
 
