@@ -257,4 +257,5 @@ RUN touch /usr/local/bin/kolla_extend_start \
     && groupadd kolla \
     && rm -f /tmp/kolla_bashrc
 
+ADD kubernetes-entrypoint /kubernetes-entrypoint
 CMD ["kolla_start"]
