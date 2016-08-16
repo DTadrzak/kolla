@@ -1,0 +1,4 @@
+[submodule "stackanetes-dockerfile/kubernetes-entrypoint"]
+	path = stackanetes-dockerfile/kubernetes-entrypoint
+	url = https://github.com/PiotrProkop/kubernetes-entrypoint
+	branch = binary
