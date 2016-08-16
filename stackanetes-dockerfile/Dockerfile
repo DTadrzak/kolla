@@ -5,4 +5,5 @@ RUN pip install -r https://raw.githubusercontent.com/openstack/kolla/master/requ
 RUN mkdir /etc/kolla
 COPY etc/kolla/* /etc/kolla/
 COPY Base-Dockerfile.j2 /usr/local/share/kolla/docker/base/Dockerfile.j2
-COPY kubernetes-entrypoint/kubernetes-entrypoint /usr/local/share/kolla/docker/base/kubernetes-entrypoint
+COPY kubernetes-entrypoint/kubernetes-entrypoint /usr/local/share/kolla/docker/base/kubernetes-entrypoin
+COPY footer /tmp/footer
